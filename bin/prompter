@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Autoload
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
+
+$autoloaded = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require $autoloadPath;
+        $autoloaded = true;
+        break;
+    }
+}
+
+if (!$autoloaded) {
+    fwrite(STDERR, "No se encontro el autoloader de Composer.\n");
+    fwrite(STDERR, "Ejecuta 'composer install' primero.\n");
+    exit(1);
+}
+
+use Prompter\Cli\Application;
+use Prompter\PromptGenerator;
+use Prompter\TemplateLoader;
+
+// Cargar templates
+$templateDir = __DIR__ . '/../templates';
+$loader = new TemplateLoader($templateDir);
+
+// Configurar generador
+$generator = new PromptGenerator();
+$generator->registerAll($loader->loadAll());
+
+// Ejecutar aplicacion
+$app = new Application($generator);
+exit($app->run($argv));
