@@ -1,0 +1,22 @@
+{
+    "name": "prompter/prompter",
+    "description": "Generador de prompts estructurados para modelos de IA",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prompter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Prompter\\Tests\\": "tests/"
+        }
+    },
+    "bin": ["bin/prompter"]
+}
